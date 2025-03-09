@@ -1,6 +1,6 @@
 # ✨ Magic Alias ✨
 
-This library is not recommended because its code is entirely AI-generated.
+***This library is not recommended because its code is entirely AI-generated.***
 
 > 🪄 A simple and powerful shell alias manager
 
