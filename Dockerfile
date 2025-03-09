@@ -10,6 +10,9 @@ COPY go.mod go.sum ./
 # Download dependencies
 RUN go mod download
 
+# Install which command
+RUN apt-get update && apt-get install -y --no-install-recommends debianutils
+
 # Copy the source code
 COPY . .
 

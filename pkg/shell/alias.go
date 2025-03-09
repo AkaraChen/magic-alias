@@ -4,6 +4,13 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
+
+	"github.com/hairyhenderson/go-which"
+)
+
+var (
+	validAliasRegex = regexp.MustCompile(`^[a-zA-Z0-9_-]+$`)
 )
 
 func AddAlias(alias string, command string) error {
@@ -12,6 +19,16 @@ func AddAlias(alias string, command string) error {
 	}
 	if command == "" {
 		return fmt.Errorf("command cannot be empty")
+	}
+
+	// Validate alias name
+	if !validAliasRegex.MatchString(alias) {
+		return fmt.Errorf("alias must contain only alphanumeric characters, underscores, and hyphens")
+	}
+
+	// Validate command exists
+	if which.Which(command) == "" {
+		return fmt.Errorf("command not found: %s", command)
 	}
 
 	aliasPath := filepath.Join(MagicAliasPath, alias)

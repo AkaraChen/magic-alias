@@ -20,6 +20,9 @@ func TestAddAlias(t *testing.T) {
 		{"valid alias", "m", "sh", false},
 		{"empty alias", "", "git", true},
 		{"empty command", "m", "", true},
+		{"invalid alias special chars", "m@", "git", true},
+		{"invalid alias spaces", "m m", "git", true},
+		{"non-existent command", "m", "nonexistentcmd", true},
 	}
 
 	for _, tt := range tests {
