@@ -18,7 +18,7 @@ Magic Alias (command: `ma`) is a friendly tool that helps you create and manage 
 
 ```bash
 # Install Magic Alias
-go install github.com/akarachen/magic-alias/cmd/ma
+go install github.com/akarachen/magic-alias/cmd/ma@latest
 
 # Setup your shell automatically, with autocompletion included 🔋
 ma init
