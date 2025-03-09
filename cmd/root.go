@@ -8,7 +8,7 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "magic-alias",
+	Use:   "ma",
 	Short: "A simple and powerful shell alias manager",
 	Long: `Magic Alias is a modern, user-friendly tool for managing shell aliases.
 It allows you to create, list, and remove aliases with an interactive interface
@@ -20,7 +20,7 @@ Features:
 - Remove aliases easily
 - Automatic shell integration
 
-Get started with 'magic-alias init' to set up the tool in your shell.`,
+Get started with 'ma init' to set up the tool in your shell.`,
 }
 
 func Execute() {

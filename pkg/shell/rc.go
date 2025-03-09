@@ -18,7 +18,7 @@ func init() {
 	MagicAliasPath = filepath.Join(homeDir, ".magic-alias")
 }
 
-const magicAliasLine = `# Magic Alias
+const magicAliasLine = `# Magic Alias (ma)
 export PATH="$PATH:$HOME/.magic-alias"
 `
 

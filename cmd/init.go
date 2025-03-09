@@ -13,8 +13,8 @@ import (
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Initialize magic-alias in your shell environment",
-	Long: `Sets up magic-alias in your shell configuration file to enable automatic alias loading.
+	Short: "Initialize Magic Alias in your shell environment",
+	Long: `Sets up Magic Alias in your shell configuration file to enable automatic alias loading.
 
 This command will:
 - Create the necessary directory structure for storing aliases
@@ -27,14 +27,14 @@ to apply the changes immediately.`,
 		// Using UI package for styles
 
 		// Show initialization message
-		fmt.Println(ui.Title("Initializing magic-alias"))
+		fmt.Println(ui.Title("Initializing Magic Alias"))
 
 		// Create a loading indicator
 		var complete bool
 		form := huh.NewForm(
 			huh.NewGroup(
 				huh.NewNote().
-					Title("Setting up magic-alias..."),
+					Title("Setting up Magic Alias..."),
 			),
 		)
 
@@ -64,7 +64,7 @@ to apply the changes immediately.`,
 			complete = true
 
 			// Show success message
-			fmt.Println(ui.Success("magic-alias successfully initialized!"))
+			fmt.Println(ui.Success("Magic Alias successfully initialized!"))
 			fmt.Println(ui.Info("Added to " + rcPath))
 			fmt.Println(ui.Warning("Please restart your shell or run 'source " + rcPath + "' to apply changes."))
 		}()

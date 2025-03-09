@@ -15,10 +15,10 @@ var removeCmd = &cobra.Command{
 	Use:     "remove <alias>",
 	Aliases: []string{"rm"},
 	Short:   "Delete an existing alias from your configuration",
-	Long: `Remove an existing alias from your magic-alias configuration.
+	Long: `Remove an existing alias from your Magic Alias configuration.
 
 This command offers two ways to remove an alias:
-1. Directly via command line: magic-alias remove myalias
+1. Directly via command line: ma remove myalias
 2. Interactively: Run without arguments to select from a list of existing aliases
 
 The interactive mode includes:

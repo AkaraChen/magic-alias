@@ -14,7 +14,7 @@ import (
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "Display all your configured aliases",
-	Long:  `Display an interactive list of all aliases created with magic-alias.
+	Long:  `Display an interactive list of all aliases created with Magic Alias.
 
 Features:
 - Shows all available aliases in an interactive selection menu
@@ -32,7 +32,7 @@ Use this command to review and manage your existing aliases.`,
 		}
 
 		if len(aliases) == 0 {
-			fmt.Println(ui.Empty("No aliases found. Use 'magic-alias add' to create one."))
+			fmt.Println(ui.Empty("No aliases found. Use 'ma add' to create one."))
 			return
 		}
 

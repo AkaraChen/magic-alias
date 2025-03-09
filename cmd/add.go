@@ -16,13 +16,13 @@ var addCmd = &cobra.Command{
 	Long: `Create a new shell alias that will execute the specified command when invoked.
 
 You can provide the alias and command as arguments or use the interactive prompt:
-- With arguments: magic-alias add g git
+- With arguments: ma add g git
 - Without arguments: An interactive form will guide you through the process
 
 The alias will be available in your shell immediately after creation.
 Aliases are stored as executable files in the magic-alias directory.`,
 	Args:    cobra.MinimumNArgs(0),
-	Example: "magic-alias add m git",
+	Example: "ma add m git",
 	Run: func(cmd *cobra.Command, args []string) {
 		var alias, command string
 
