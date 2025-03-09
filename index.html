@@ -3,226 +3,926 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magic Alias - A Simple Shell Alias Manager</title>
+    <title>Magic Alias - A simple and powerful shell alias manager</title>
     <style>
         :root {
-            --primary: #3498db;
-            --secondary: #87cefa;
-            --background: #f8f9fa;
-            --text: #2d3436;
-            --code-bg: #2d3436;
-            --code-text: #dfe6e9;
+            /* 更改为冷色系配色 */
+            --bg-color: #0f172a;
+            --text-color: #f1f5f9;
+            --primary-color: #3b82f6;
+            --secondary-color: #1d4ed8;
+            --accent-color: #38bdf8;
+            --code-bg: #1e293b;
+            --card-bg: #1e293b;
+            --warning-color: #fbbf24;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
-            color: var(--text);
-            background-color: var(--background);
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            margin: 40px 0;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-        
-        h2 {
-            font-size: 1.8rem;
-            margin: 40px 0 20px;
-            color: var(--primary);
-            border-bottom: 2px solid var(--secondary);
-            padding-bottom: 10px;
-        }
-        
-        p {
-            margin-bottom: 20px;
-        }
-        
-        blockquote {
-            border-left: 4px solid var(--secondary);
-            padding-left: 20px;
-            margin: 20px 0;
-            font-style: italic;
-        }
-        
-        code {
-            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-            background-color: #eee;
-            padding: 2px 5px;
-            border-radius: 3px;
-        }
-        
-        pre {
-            background-color: var(--code-bg);
-            color: var(--code-text);
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-            margin: 20px 0;
-        }
-        
-        pre code {
-            background: none;
-            color: inherit;
-            padding: 0;
-        }
-        
-        ul {
-            margin: 20px 0;
-            padding-left: 30px;
-        }
-        
-        li {
-            margin-bottom: 10px;
-        }
-        
-        .feature-icon {
-            margin-right: 8px;
-        }
-        
-        footer {
-            margin-top: 60px;
-            text-align: center;
-            color: #636e72;
-            font-size: 0.9rem;
-        }
-        
-        a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-        
-        a:hover {
-            text-decoration: underline;
+            overflow-x: hidden;
         }
 
         .container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(108, 178, 235, 0.15);
-            padding: 40px;
-            margin: 20px 0;
-            border-top: 5px solid var(--primary);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 粒子背景 */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* 页面元素淡入效果 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        header {
+            padding: 6rem 0 3rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.1) 0%, rgba(15, 23, 42, 0) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 添加浮动装饰元素 */
+        .floating-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            opacity: 0.1;
+            filter: blur(20px);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .decoration-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .decoration-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -50px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        .decoration-3 {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            right: 10%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(10px, 15px) rotate(5deg);
+            }
+            50% {
+                transform: translate(5px, -10px) rotate(-5deg);
+            }
+            75% {
+                transform: translate(-10px, 5px) rotate(3deg);
+            }
+        }
+
+        .warning-banner {
+            background-color: rgba(251, 191, 36, 0.1);
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            border-radius: 0.5rem;
+            font-style: italic;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .warning-banner:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            position: relative;
+            animation: glow 3s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+            }
+            100% {
+                text-shadow: 0 0 20px rgba(59, 130, 246, 0.4), 0 0 30px rgba(56, 189, 248, 0.2);
+            }
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .tagline i {
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        section {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transition: width 0.5s ease;
+        }
+
+        h2:hover::after {
+            width: 50%;
         }
 
         h3 {
-            color: #2980b9;
-            margin: 20px 0 10px;
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--accent-color);
         }
 
-        @media (max-width: 600px) {
-            body {
-                padding: 15px;
-            }
-            .container {
-                padding: 20px;
-            }
+        p {
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 特性部分 */
+        .features-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .feature-row:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-row:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .feature-icon-container {
+            flex: 0 0 30%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(56, 189, 248, 0.1));
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+        }
+
+        .feature-icon-container::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            opacity: 0.1;
+            top: -50%;
+            left: -50%;
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .feature-row:hover .feature-icon-container::before {
+            transform: rotate(90deg);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .feature-row:hover .feature-icon {
+            transform: scale(1.2);
+            color: var(--accent-color);
+        }
+
+        .feature-content {
+            flex: 0 0 70%;
+            padding: 2rem;
+        }
+
+        .feature-content h3 {
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+
+        /* 代码块容器 */
+        .terminal-container {
+            background-color: var(--code-bg);
+            border-radius: 0.5rem;
+            margin: 1.5rem auto;
+            max-width: 800px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .terminal-container:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: #0f172a;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .terminal-close {
+            background-color: #ff5f56;
+        }
+
+        .terminal-minimize {
+            background-color: #ffbd2e;
+        }
+
+        .terminal-maximize {
+            background-color: #27c93f;
+        }
+
+        .terminal-title {
+            margin-left: 10px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        pre {
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 0;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(59, 130, 246, 0.2);
+            border: none;
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            opacity: 0;
+        }
+
+        .terminal-container:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .copy-btn:hover {
+            background: rgba(59, 130, 246, 0.4);
+        }
+
+        code {
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
+            color: #e2e8f0;
+        }
+
+        .command {
+            color: var(--accent-color);
+        }
+
+        .usage-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .usage-title {
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            background-color: rgba(15, 23, 42, 0.8);
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        /* 滚动到顶部按钮 */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        .scroll-top:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
             h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            h2 {
                 font-size: 2rem;
             }
-            h2 {
+            
+            h3 {
                 font-size: 1.5rem;
             }
+            
+            .feature-row {
+                flex-direction: column !important;
+            }
+            
+            .feature-icon-container, .feature-content {
+                flex: 0 0 100%;
+                width: 100%;
+            }
+            
+            .feature-icon-container {
+                min-height: 150px;
+            }
+
+            .decoration-1, .decoration-2, .decoration-3 {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        /* 暗/亮模式切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            background-color: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+        }
+
+        /* 亮色模式样式 */
+        body.light-mode {
+            --bg-color: #f1f5f9;
+            --text-color: #0f172a;
+            --card-bg: #ffffff;
+            --code-bg: #f8fafc;
+        }
+
+        body.light-mode .command {
+            color: #0284c7;
+        }
+
+        body.light-mode code {
+            color: #334155;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>✨ Magic Alias ✨</h1>
-            <blockquote>
-                <p>🪄 A simple and powerful shell alias manager</p>
-            </blockquote>
-        </header>
-        
-        <main>
-            <section>
-                <h2>🌟 What is Magic Alias?</h2>
-                <p>Magic Alias (command: <code>ma</code>) is a friendly tool that helps you create and manage shell aliases. No more typing long commands over and over again!</p>
-            </section>
-            
-            <section>
-                <h2>🚀 Features</h2>
-                <ul>
-                    <li><span class="feature-icon">📝</span> <strong>Create aliases easily</strong>: Turn any long command into a short one</li>
-                    <li><span class="feature-icon">📋</span> <strong>List all your aliases</strong>: See all your shortcuts in one place</li>
-                    <li><span class="feature-icon">🗑️</span> <strong>Remove aliases</strong>: Delete shortcuts you don't need anymore</li>
-                    <li><span class="feature-icon">🖥️</span> <strong>Interactive UI</strong>: Nice menus make it easy to use</li>
-                    <li><span class="feature-icon">🔄</span> <strong>Works with your shell</strong>: Automatically sets up with your terminal</li>
-                </ul>
-            </section>
-            
-            <section>
-                <h2>📦 Installation</h2>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+
+    <!-- 暗/亮模式切换 -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- 滚动到顶部按钮 -->
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <header>
+        <!-- 装饰元素 -->
+        <div class="floating-decoration decoration-1"></div>
+        <div class="floating-decoration decoration-2"></div>
+        <div class="floating-decoration decoration-3"></div>
+
+        <div class="container">
+            <h1 class="fade-in">✨ Magic Alias ✨</h1>
+            <p class="tagline fade-in"><i class="fas fa-wand-magic-sparkles"></i> A simple and powerful shell alias manager</p>
+            <div class="warning-banner fade-in">
+                <strong>Note:</strong> This library is not recommended because its code is entirely AI-generated.
+            </div>
+        </div>
+    </header>
+
+    <section id="intro">
+        <div class="container">
+            <h2 class="fade-in">🌟 What is Magic Alias?</h2>
+            <p class="fade-in">Magic Alias (command: <code>ma</code>) is a friendly tool that helps you create and manage shell aliases. No more typing long commands over and over again!</p>
+            <div style="text-align: center;" class="fade-in">
+                <a href="https://github.com/akarachen/magic-alias" class="btn">View on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特性部分 -->
+    <section id="features">
+        <div class="container">
+            <h2 class="fade-in">🚀 Features</h2>
+            <div class="features-container">
+                <div class="feature-row fade-in">
+                    <div class="feature-icon-container">
+                        <div class="feature-icon"><i class="fas fa-edit"></i></div>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Create aliases easily</h3>
+                        <p>Turn any long command into a short one with just a few keystrokes. Magic Alias makes it simple to create shortcuts for your most frequently used commands.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-row fade-in">
+                    <div class="feature-icon-container">
+                        <div class="feature-icon"><i class="fas fa-list"></i></div>
+                    </div>
+                    <div class="feature-content">
+                        <h3>List all your aliases</h3>
+                        <p>Easily view and manage all your shortcuts in one place. Never forget what aliases you've created with a simple list command.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-row fade-in">
+                    <div class="feature-icon-container">
+                        <div class="feature-icon"><i class="fas fa-trash"></i></div>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Remove aliases</h3>
+                        <p>Delete shortcuts you don't need anymore with a simple command. Keep your alias list clean and organized.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-row fade-in">
+                    <div class="feature-icon-container">
+                        <div class="feature-icon"><i class="fas fa-terminal"></i></div>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Interactive UI</h3>
+                        <p>Enjoy a beautiful terminal interface with intuitive menus that make managing your aliases a breeze, even for beginners.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-row fade-in">
+                    <div class="feature-icon-container">
+                        <div class="feature-icon"><i class="fas fa-sync"></i></div>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Works with your shell</h3>
+                        <p>Automatically sets up with your terminal environment. Compatible with Bash, Zsh, and Fish shells with autocompletion support.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="installation">
+        <div class="container">
+            <h2 class="fade-in">📦 Installation</h2>
+            <!-- 代码块容器 -->
+            <div class="terminal-container fade-in">
+                <div class="terminal-header">
+                    <div class="terminal-btn terminal-close"></div>
+                    <div class="terminal-btn terminal-minimize"></div>
+                    <div class="terminal-btn terminal-maximize"></div>
+                    <div class="terminal-title">terminal</div>
+                </div>
                 <pre><code># Install Magic Alias
-go install github.com/akarachen/magic-alias/cmd/ma@latest
+<span class="command">go install github.com/akarachen/magic-alias/cmd/ma@latest</span>
 
 # Setup your shell automatically, with autocompletion included 🔋
-ma init</code></pre>
-            </section>
-            
-            <section>
-                <h2>🎮 How to Use</h2>
-                
-                <h3>Create a new alias</h3>
-                <pre><code># Create with arguments
-ma add g git
+<span class="command">ma init</span></code></pre>
+                <button class="copy-btn">Copy</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="usage">
+        <div class="container">
+            <h2 class="fade-in">🎮 How to Use</h2>
+            <div class="usage-section">
+                <div class="usage-title fade-in">
+                    <h3>Create a new alias</h3>
+                </div>
+                <div class="terminal-container fade-in">
+                    <div class="terminal-header">
+                        <div class="terminal-btn terminal-close"></div>
+                        <div class="terminal-btn terminal-minimize"></div>
+                        <div class="terminal-btn terminal-maximize"></div>
+                        <div class="terminal-title">terminal</div>
+                    </div>
+                    <pre><code># Create with arguments
+<span class="command">ma add g git</span>
 
 # Or use interactive mode
-ma add</code></pre>
-                
-                <h3>List all your aliases</h3>
-                <pre><code>ma list</code></pre>
-                
-                <h3>Remove an alias</h3>
-                <pre><code># Remove with arguments
-ma remove g
+<span class="command">ma add</span></code></pre>
+                    <button class="copy-btn">Copy</button>
+                </div>
+
+                <div class="usage-title fade-in">
+                    <h3>List all your aliases</h3>
+                </div>
+                <div class="terminal-container fade-in">
+                    <div class="terminal-header">
+                        <div class="terminal-btn terminal-close"></div>
+                        <div class="terminal-btn terminal-minimize"></div>
+                        <div class="terminal-btn terminal-maximize"></div>
+                        <div class="terminal-title">terminal</div>
+                    </div>
+                    <pre><code><span class="command">ma list</span></code></pre>
+                    <button class="copy-btn">Copy</button>
+                </div>
+
+                <div class="usage-title fade-in">
+                    <h3>Remove an alias</h3>
+                </div>
+                <div class="terminal-container fade-in">
+                    <div class="terminal-header">
+                        <div class="terminal-btn terminal-close"></div>
+                        <div class="terminal-btn terminal-minimize"></div>
+                        <div class="terminal-btn terminal-maximize"></div>
+                        <div class="terminal-title">terminal</div>
+                    </div>
+                    <pre><code># Remove with arguments
+<span class="command">ma remove g</span>
 
 # Or use interactive mode
-ma rm</code></pre>
-                
-                <h3>Uninstall Magic Alias</h3>
-                <pre><code># Uninstall
-ma uninstall</code></pre>
-            </section>
+<span class="command">ma rm</span></code></pre>
+                    <button class="copy-btn">Copy</button>
+                </div>
+
+                <div class="usage-title fade-in">
+                    <h3>Uninstall Magic Alias</h3>
+                </div>
+                <div class="terminal-container fade-in">
+                    <div class="terminal-header">
+                        <div class="terminal-btn terminal-close"></div>
+                        <div class="terminal-btn terminal-minimize"></div>
+                        <div class="terminal-btn terminal-maximize"></div>
+                        <div class="terminal-title">terminal</div>
+                    </div>
+                    <pre><code># Uninstall
+<span class="command">ma uninstall</span></code></pre>
+                    <button class="copy-btn">Copy</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="floating-decoration decoration-1"></div>
+        <div class="container">
+            <p class="fade-in">See <a href="LICENSE" style="color: var(--primary-color);">LICENSE</a> for details.</p>
+            <p style="margin-top: 1rem;" class="fade-in">Made with <i class="fas fa-heart" style="color: var(--accent-color);"></i> by <a href="https://github.com/akarachen" style="color: var(--primary-color);">akarachen</a></p>
+        </div>
+    </footer>
+
+    <!-- 粒子背景JS -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // 粒子背景配置
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#3b82f6'
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    },
+                },
+                opacity: {
+                    value: 0.2,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 40,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#3b82f6',
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 0.5
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+
+        // 滚动动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化淡入元素
+            const fadeElements = document.querySelectorAll('.fade-in');
             
-            <section>
-                <h2>🧰 Development</h2>
-                <p>This project uses:</p>
-                <ul>
-                    <li><a href="https://github.com/spf13/cobra" target="_blank">Cobra</a> for CLI commands</li>
-                    <li><a href="https://github.com/charmbracelet/huh" target="_blank">Charm</a> for interactive UI</li>
-                    <li><a href="https://github.com/casey/just" target="_blank">Just</a> for development tasks</li>
-                </ul>
-                
-                <p>To run tests:</p>
-                <pre><code>just test</code></pre>
-            </section>
+            // 滚动监听
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
             
-            <section>
-                <h2>📄 License</h2>
-                <p>See <a href="LICENSE">LICENSE</a> for details.</p>
-            </section>
-        </main>
-        
-        <footer>
-            <p>Magic Alias - Made with ❤️ for command line enthusiasts</p>
-        </footer>
-    </div>
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // 滚动到顶部按钮
+            const scrollTopBtn = document.getElementById('scrollTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
+            });
+            
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // 代码复制功能
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeBlock = this.previousElementSibling;
+                    const textToCopy = codeBlock.textContent;
+                    
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const originalText = this.textContent;
+                        this.textContent = 'Copied!';
+                        this.style.background = 'rgba(39, 201, 63, 0.4)';
+                        
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                            this.style.background = 'rgba(59, 130, 246, 0.2)';
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+                });
+            });
+
+            // 暗/亮模式切换
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('light-mode');
+                
+                if (document.body.classList.contains('light-mode')) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
