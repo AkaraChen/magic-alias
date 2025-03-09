@@ -5,25 +5,9 @@ import (
 	"os"
 
 	"github.com/akarachen/magic-alias/pkg/shell"
+	"github.com/akarachen/magic-alias/pkg/ui"
 	"github.com/charmbracelet/huh"
-	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
-)
-
-// Styles for UI elements
-var (
-	titleStyle = lipgloss.NewStyle().
-		Foreground(lipgloss.Color("#FF5F87")).
-		Bold(true).
-		Margin(1, 0)
-
-	successStyle = lipgloss.NewStyle().
-		Foreground(lipgloss.Color("#5AF78E")).
-		Bold(true)
-
-	errorStyle = lipgloss.NewStyle().
-		Foreground(lipgloss.Color("#FF5F87")).
-		Bold(true)
 )
 
 var addCmd = &cobra.Command{
@@ -31,7 +15,7 @@ var addCmd = &cobra.Command{
 	Short: "Add a new alias",
 	Long: `Add a new alias that will execute the specified command.
 Example: magic-alias add m git`,
-	Args: cobra.MinimumNArgs(0),
+	Args:    cobra.MinimumNArgs(0),
 	Example: "magic-alias add m git",
 	Run: func(cmd *cobra.Command, args []string) {
 		var alias, command string
@@ -42,7 +26,7 @@ Example: magic-alias add m git`,
 			command = args[1]
 		} else {
 			// Otherwise, use interactive form
-			fmt.Println(titleStyle.Render("✨ Create New Alias"))
+			fmt.Println(ui.Title("Create New Alias"))
 
 			form := huh.NewForm(
 				huh.NewGroup(
@@ -73,7 +57,7 @@ Example: magic-alias add m git`,
 
 			err := form.Run()
 			if err != nil {
-				fmt.Println(errorStyle.Render("Error: " + err.Error()))
+				fmt.Println(ui.Error("Error: " + err.Error()))
 				os.Exit(1)
 			}
 		}
@@ -81,11 +65,11 @@ Example: magic-alias add m git`,
 		// Add the alias
 		err := shell.AddAlias(alias, command)
 		if err != nil {
-			fmt.Println(errorStyle.Render("Error adding alias: " + err.Error()))
+			fmt.Println(ui.Error("Error adding alias: " + err.Error()))
 			os.Exit(1)
 		}
 
-		fmt.Println(successStyle.Render("✓ Successfully added alias: " + alias))
+		fmt.Println(ui.Success("Successfully added alias: " + alias))
 	},
 }
 

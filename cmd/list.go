@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/akarachen/magic-alias/pkg/shell"
+	"github.com/akarachen/magic-alias/pkg/ui"
 	"github.com/charmbracelet/huh"
-	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
 )
 
@@ -16,33 +16,20 @@ var listCmd = &cobra.Command{
 	Short: "List all aliases",
 	Long:  `Display a list of all aliases created with magic-alias.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// Create styles for the list display
-		headerStyle := lipgloss.NewStyle().
-			Foreground(lipgloss.Color("#FF5F87")).
-			Bold(true).
-			Margin(1, 0)
-
-		aliasStyle := lipgloss.NewStyle().
-			Foreground(lipgloss.Color("#5AF78E")).
-			Margin(0, 2)
-
-		emptyStyle := lipgloss.NewStyle().
-			Foreground(lipgloss.Color("#FF5F87")).
-			Italic(true).
-			Margin(1, 0)
+		// Using UI package for styles
 
 		aliases, err := shell.ListAliases()
 		if err != nil {
-			fmt.Println(errorStyle.Render("Error listing aliases: " + err.Error()))
+			fmt.Println(ui.Error("Error listing aliases: " + err.Error()))
 			os.Exit(1)
 		}
 
 		if len(aliases) == 0 {
-			fmt.Println(emptyStyle.Render("No aliases found. Use 'magic-alias add' to create one."))
+			fmt.Println(ui.Empty("No aliases found. Use 'magic-alias add' to create one."))
 			return
 		}
 
-		fmt.Println(headerStyle.Render("✨ Available Aliases"))
+		fmt.Println(ui.Title("Available Aliases"))
 
 		// Create a list of aliases with selection capability
 		var selectedAlias string
@@ -61,16 +48,16 @@ var listCmd = &cobra.Command{
 		// Run the form
 		err = form.Run()
 		if err != nil {
-			fmt.Println(errorStyle.Render("Error: " + err.Error()))
+			fmt.Println(ui.Error("Error: " + err.Error()))
 			return
 		}
 
 		// If an alias was selected, show details
 		if selectedAlias != "" {
 			aliasPath := shell.GetAliasPath(selectedAlias)
-			fmt.Println(headerStyle.Render("Alias Details"))
-			fmt.Println(aliasStyle.Render("Name: " + selectedAlias))
-			fmt.Println(aliasStyle.Render("Path: " + aliasPath))
+			fmt.Println(ui.Title("Alias Details"))
+			fmt.Println(ui.Info("Name: " + selectedAlias))
+			fmt.Println(ui.Info("Path: " + aliasPath))
 		}
 	},
 }

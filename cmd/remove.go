@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/akarachen/magic-alias/pkg/shell"
+	"github.com/akarachen/magic-alias/pkg/ui"
 	"github.com/charmbracelet/huh"
-	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
 )
 
@@ -20,11 +20,7 @@ var removeCmd = &cobra.Command{
 Example:
   magic-alias remove myalias`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// Create styles for the UI
-		warningStyle := lipgloss.NewStyle().
-			Foreground(lipgloss.Color("#FFAF00")).
-			Bold(true).
-			Margin(1, 0)
+		// Using UI package for styles
 
 		var aliasName string
 
@@ -35,16 +31,16 @@ Example:
 			// Otherwise, show an interactive selection of available aliases
 			aliases, err := shell.ListAliases()
 			if err != nil {
-				fmt.Println(errorStyle.Render("Error listing aliases: " + err.Error()))
+				fmt.Println(ui.Error("Error listing aliases: " + err.Error()))
 				os.Exit(1)
 			}
 
 			if len(aliases) == 0 {
-				fmt.Println(warningStyle.Render("No aliases found to remove."))
+				fmt.Println(ui.Warning("No aliases found to remove."))
 				return
 			}
 
-			fmt.Println(titleStyle.Render("✨ Remove Alias"))
+			fmt.Println(ui.Title("Remove Alias"))
 
 			// Create a form to select which alias to remove
 			form := huh.NewForm(
@@ -60,7 +56,7 @@ Example:
 
 			err = form.Run()
 			if err != nil {
-				fmt.Println(errorStyle.Render("Error: " + err.Error()))
+				fmt.Println(ui.Error("Error: " + err.Error()))
 				os.Exit(1)
 			}
 
@@ -80,12 +76,12 @@ Example:
 
 			err = confirmForm.Run()
 			if err != nil {
-				fmt.Println(errorStyle.Render("Error: " + err.Error()))
+				fmt.Println(ui.Error("Error: " + err.Error()))
 				os.Exit(1)
 			}
 
 			if !confirmed {
-				fmt.Println(warningStyle.Render("Removal cancelled."))
+				fmt.Println(ui.Warning("Removal cancelled."))
 				return
 			}
 		}
@@ -93,11 +89,11 @@ Example:
 		// Remove the alias
 		err := shell.RemoveAlias(aliasName)
 		if err != nil {
-			fmt.Println(errorStyle.Render("Error removing alias: " + err.Error()))
+			fmt.Println(ui.Error("Error removing alias: " + err.Error()))
 			return
 		}
 
-		fmt.Println(successStyle.Render("✓ Alias '" + aliasName + "' removed successfully"))
+		fmt.Println(ui.Success("Alias '" + aliasName + "' removed successfully"))
 	},
 }
 
