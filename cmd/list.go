@@ -25,7 +25,7 @@ Use this command to review and manage your existing aliases.`,
 
 		aliases, err := shell.ListAliases()
 		if err != nil {
-			ui.LogErrorAndExit("Error listing aliases: %v", err)
+			ui.LogErrorAndExit("Error listing aliases: %v", "err", err)
 		}
 
 		if len(aliases) == 0 {
@@ -52,7 +52,7 @@ Use this command to review and manage your existing aliases.`,
 		// Run the form
 		err = form.Run()
 		if err != nil {
-			ui.LogError("Error: %v", err)
+			ui.LogError("Error: %v", "err", err)
 			return
 		}
 
@@ -60,8 +60,8 @@ Use this command to review and manage your existing aliases.`,
 		if selectedAlias != "" {
 			aliasPath := shell.GetAliasPath(selectedAlias)
 			ui.LogTitle("Alias Details")
-			ui.LogInfo("Name: %s", selectedAlias)
-			ui.LogInfo("Path: %s", aliasPath)
+			ui.LogInfo("Name: %s", "alias", selectedAlias)
+			ui.LogInfo("Path: %s", "path", aliasPath)
 		}
 	},
 }

@@ -68,17 +68,17 @@ Aliases are stored as executable files in the magic-alias directory.`,
 
 			err := form.Run()
 			if err != nil {
-				ui.LogErrorAndExit("Error: %v", err)
+				ui.LogErrorAndExit("Error: %v", "err", err)
 			}
 		}
 
 		// Add the alias
 		err := shell.AddAlias(alias, command)
 		if err != nil {
-			ui.LogErrorAndExit("Error adding alias: %v", err)
+			ui.LogErrorAndExit("Error adding alias: %v", "err", err)
 		}
 
-		ui.LogSuccess("Successfully added alias: %s", alias)
+		ui.LogSuccess("Successfully added alias: %s", "alias", alias)
 	},
 }
 

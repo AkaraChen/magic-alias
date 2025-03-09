@@ -39,7 +39,7 @@ Once removed, the alias will no longer be available in your shell.`,
 			// Otherwise, show an interactive selection of available aliases
 			aliases, err := shell.ListAliases()
 			if err != nil {
-				ui.LogErrorAndExit("Error listing aliases: %v", err)
+				ui.LogErrorAndExit("Error listing aliases: %v", "err", err)
 			}
 
 			if len(aliases) == 0 {
@@ -63,7 +63,7 @@ Once removed, the alias will no longer be available in your shell.`,
 
 			err = form.Run()
 			if err != nil {
-				ui.LogErrorAndExit("Error: %v", err)
+				ui.LogErrorAndExit("Error: %v", "err", err)
 			}
 
 			if aliasName == "" {
@@ -82,7 +82,7 @@ Once removed, the alias will no longer be available in your shell.`,
 
 			err = confirmForm.Run()
 			if err != nil {
-				ui.LogErrorAndExit("Error: %v", err)
+				ui.LogErrorAndExit("Error: %v", "err", err)
 			}
 
 			if !confirmed {
@@ -94,11 +94,11 @@ Once removed, the alias will no longer be available in your shell.`,
 		// Remove the alias
 		err := shell.RemoveAlias(aliasName)
 		if err != nil {
-			ui.LogError("Error removing alias: %v", err)
+			ui.LogError("Error removing alias: %v", "err", err)
 			return
 		}
 
-		ui.LogSuccess("Alias '%s' removed successfully", aliasName)
+		ui.LogSuccess("Alias '%s' removed successfully", "alias", aliasName)
 	},
 }
 
