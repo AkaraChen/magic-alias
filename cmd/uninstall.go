@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"os"
+	"time"
 
 	"github.com/akarachen/magic-alias/pkg/shell"
 	"github.com/akarachen/magic-alias/pkg/ui"
@@ -91,6 +92,21 @@ you'll need to uninstall it using your package manager after running this comman
 				os.Exit(1)
 			}
 
+			// Create a backup of the rc file before modifying it with timestamp
+			timeStamp := time.Now().Format("20060102_150405")
+			backupPath := rcPath + "." + timeStamp + ".bak"
+			rcContent, err := os.ReadFile(rcPath)
+			if err != nil {
+				ui.LogError("Error reading rc file: %v", err)
+				os.Exit(1)
+			}
+
+			err = os.WriteFile(backupPath, rcContent, 0644)
+			if err != nil {
+				ui.LogError("Error creating backup file: %v", err)
+				os.Exit(1)
+			}
+
 			// Remove Magic Alias from rc file
 			err = shell.RemoveMagicAliasFromRc(rcPath)
 			if err != nil {
@@ -112,6 +128,7 @@ you'll need to uninstall it using your package manager after running this comman
 			// Show success message
 			ui.LogSuccess("Magic Alias successfully uninstalled!")
 			ui.LogInfo("Removed from %s", rcPath)
+			ui.LogInfo("Backup created at %s", backupPath)
 			if removeAliases {
 				ui.LogInfo("All aliases have been removed.")
 			}
