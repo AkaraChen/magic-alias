@@ -1,6 +1,3 @@
-/*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-*/
 package cmd
 
 import (
@@ -22,12 +19,12 @@ var listCmd = &cobra.Command{
 			fmt.Fprintf(os.Stderr, "Error listing aliases: %v\n", err)
 			os.Exit(1)
 		}
-		
+
 		if len(aliases) == 0 {
 			fmt.Println("No aliases found.")
 			return
 		}
-		
+
 		fmt.Println("Available aliases:")
 		for _, alias := range aliases {
 			fmt.Printf("  %s\n", alias)
