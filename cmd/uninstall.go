@@ -74,76 +74,55 @@ you'll need to uninstall it using your package manager after running this comman
 			}
 		}
 
-		// Create a loading indicator
-		var complete bool
-		form := huh.NewForm(
-			huh.NewGroup(
-				huh.NewNote().
-					Title("Uninstalling Magic Alias..."),
-			),
-		)
+		// Display uninstallation message
+		ui.LogInfo("Uninstalling Magic Alias...")
 
-		// Process in a goroutine
-		go func() {
-			// Get the shell rc path
-			rcPath, err := shell.GetShellRcPath()
-			if err != nil {
-				ui.LogError("Error getting shell rc path: %v", err)
-				os.Exit(1)
-			}
-
-			// Create a backup of the rc file before modifying it with timestamp
-			timeStamp := time.Now().Format("20060102_150405")
-			backupPath := rcPath + "." + timeStamp + ".bak"
-			rcContent, err := os.ReadFile(rcPath)
-			if err != nil {
-				ui.LogError("Error reading rc file: %v", err)
-				os.Exit(1)
-			}
-
-			err = os.WriteFile(backupPath, rcContent, 0644)
-			if err != nil {
-				ui.LogError("Error creating backup file: %v", err)
-				os.Exit(1)
-			}
-
-			// Remove Magic Alias from rc file
-			err = shell.RemoveMagicAliasFromRc(rcPath)
-			if err != nil {
-				ui.LogError("Error removing from rc file: %v", err)
-				os.Exit(1)
-			}
-
-			// Remove aliases if requested
-			if removeAliases {
-				if err := os.RemoveAll(shell.MagicAliasPath); err != nil {
-					ui.LogError("Error removing aliases directory: %v", err)
-					os.Exit(1)
-				}
-			}
-
-			// Mark as complete
-			complete = true
-
-			// Show success message
-			ui.LogSuccess("Magic Alias successfully uninstalled!")
-			ui.LogInfo("Removed from %s", rcPath)
-			ui.LogInfo("Backup created at %s", backupPath)
-			if removeAliases {
-				ui.LogInfo("All aliases have been removed.")
-			}
-			ui.LogWarning("Please restart your shell or run 'source %s' to apply changes.", rcPath)
-			ui.LogInfo("To completely remove Magic Alias, uninstall it using your package manager.")
-		}()
-
-		// Run the form
-		form.Run()
-
-		// Wait for the goroutine to complete if it hasn't already
-		for !complete {
-			// Small pause to avoid CPU spinning
-			// No need to print anything
+		// Get the shell rc path
+		rcPath, err := shell.GetShellRcPath()
+		if err != nil {
+			ui.LogError("Error getting shell rc path: %v", err)
+			os.Exit(1)
 		}
+
+		// Create a backup of the rc file before modifying it with timestamp
+		timeStamp := time.Now().Format("20060102_150405")
+		backupPath := rcPath + "." + timeStamp + ".bak"
+		rcContent, err := os.ReadFile(rcPath)
+		if err != nil {
+			ui.LogError("Error reading rc file: %v", err)
+			os.Exit(1)
+		}
+
+		err = os.WriteFile(backupPath, rcContent, 0644)
+		if err != nil {
+			ui.LogError("Error creating backup file: %v", err)
+			os.Exit(1)
+		}
+
+		// Remove Magic Alias from rc file
+		err = shell.RemoveMagicAliasFromRc(rcPath)
+		if err != nil {
+			ui.LogError("Error removing from rc file: %v", err)
+			os.Exit(1)
+		}
+
+		// Remove aliases if requested
+		if removeAliases {
+			if err := os.RemoveAll(shell.MagicAliasPath); err != nil {
+				ui.LogError("Error removing aliases directory: %v", err)
+				os.Exit(1)
+			}
+		}
+
+		// Show success message
+		ui.LogSuccess("Magic Alias successfully uninstalled!")
+		ui.LogInfo("Removed from %s", rcPath)
+		ui.LogInfo("Backup created at %s", backupPath)
+		if removeAliases {
+			ui.LogInfo("All aliases have been removed.")
+		}
+		ui.LogWarning("Please restart your shell or run 'source %s' to apply changes.", rcPath)
+		ui.LogInfo("To completely remove Magic Alias, uninstall it using your package manager.")
 	},
 }
 

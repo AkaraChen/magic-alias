@@ -43,3 +43,7 @@ uninstall:
 # Run
 run *args:
     go run ./cmd/ma {{args}}
+
+# Count code
+cloc:
+    cloc .
