@@ -1,19 +1,7 @@
 package main
 
-import (
-	"context"
-	"os"
-
-	"github.com/urfave/cli/v3"
-)
-
-func init() {}
+import "github.com/akarachen/magic-alias/cmd"
 
 func main() {
-	app := cli.Command{
-		Name:        "magic-alias",
-		Description: "Alias, but magical.",
-	}
-
-	app.Run(context.Background(), os.Args)
+	cmd.Execute()
 }
