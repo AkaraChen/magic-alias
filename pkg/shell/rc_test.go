@@ -116,7 +116,7 @@ func TestWriteMagicAliasToRc(t *testing.T) {
 			}
 
 			// Test the function with the temporary rc file path
-			err = WriteMagicAliasToRc(shell)
+			err = WriteMagicAliasToRcPath(shell, tmpRc)
 			if (err != nil) != tt.expectError {
 				t.Errorf("expected error: %v, got: %v", tt.expectError, err)
 			}

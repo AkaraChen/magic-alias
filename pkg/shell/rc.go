@@ -20,6 +20,13 @@ func init() {
 
 func WriteMagicAliasToRc(shell string) error {
 	rcPath, err := GetShellRcPath()
+	if err != nil {
+		return fmt.Errorf("failed to get shell rc path: %w", err)
+	}
+	return WriteMagicAliasToRcPath(shell, rcPath)
+}
+
+func WriteMagicAliasToRcPath(shell, rcPath string) error {
 	// Check if the line already exists in the rc file
 	content, err := os.ReadFile(rcPath)
 	if err != nil {
@@ -41,7 +48,20 @@ func WriteMagicAliasToRc(shell string) error {
 	if err != nil {
 		return fmt.Errorf("failed to render script content: %w", err)
 	}
-	if _, err := f.WriteString("\n" + scriptContent); err != nil {
+
+	// Determine the appropriate prefix based on file content
+	prefix := ""
+	if len(content) > 0 {
+		// If file has content, add double newline if it doesn't end with newline
+		// otherwise add a single newline
+		if !strings.HasSuffix(string(content), "\n") {
+			prefix = "\n\n"
+		} else {
+			prefix = "\n"
+		}
+	}
+
+	if _, err := f.WriteString(prefix + scriptContent); err != nil {
 		return fmt.Errorf("failed to write to rc file: %w", err)
 	}
 
