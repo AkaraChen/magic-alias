@@ -64,7 +64,7 @@ to enable automatic loading of aliases.`,
 
 		// Run the form
 		form.Run()
-		
+
 		// Wait for the goroutine to complete if it hasn't already
 		for !complete {
 			// Small pause to avoid CPU spinning
