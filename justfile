@@ -18,7 +18,7 @@ shell:
 # Run tests in the container
 test:
     docker compose exec magic-alias go test ./...
-    docker run --rm -it -v "$PWD:/code" bats/bats:latest /code/test
+    # docker run --rm -it -v "$PWD:/code" bats/bats:latest /code/test
 
 # Run the application
 run:

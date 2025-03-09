@@ -62,3 +62,33 @@ func pathInPath(targetPath string) bool {
 func IsMagicAliasInPath() (bool, error) {
 	return pathInPath(MagicAliasPath), nil
 }
+
+// RemoveMagicAliasFromRc removes the magic alias PATH export from the rc file
+func RemoveMagicAliasFromRc(rcPath string) error {
+	// Read the rc file content
+	content, err := os.ReadFile(rcPath)
+	if err != nil {
+		return fmt.Errorf("failed to read rc file: %w", err)
+	}
+
+	// Check if the magic alias line exists in the file
+	contentStr := string(content)
+	if !strings.Contains(contentStr, magicAliasLine) {
+		return nil // Nothing to remove
+	}
+
+	// Remove the magic alias line
+	newContent := strings.Replace(contentStr, "\n"+magicAliasLine, "", 1)
+	// If the replacement didn't work (possibly due to no newline), try without newline
+	if newContent == contentStr {
+		newContent = strings.Replace(contentStr, magicAliasLine, "", 1)
+	}
+
+	// Write the updated content back to the file
+	err = os.WriteFile(rcPath, []byte(newContent), 0644)
+	if err != nil {
+		return fmt.Errorf("failed to write updated rc file: %w", err)
+	}
+
+	return nil
+}
