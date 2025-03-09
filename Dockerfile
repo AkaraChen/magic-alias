@@ -13,5 +13,4 @@ RUN go mod download
 # Copy the source code
 COPY . .
 
-# Build the application
-RUN CGO_ENABLED=0 GOOS=linux go build -o magic-alias .
+ENV SHELL=/bin/bash
