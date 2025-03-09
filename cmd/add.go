@@ -32,7 +32,7 @@ Aliases are stored as executable files in the magic-alias directory.`,
 			command = args[1]
 		} else {
 			// Otherwise, use interactive form
-			fmt.Println(ui.Title("Create New Alias"))
+			ui.LogTitle("Create New Alias")
 
 			form := huh.NewForm(
 				huh.NewGroup(
@@ -63,7 +63,7 @@ Aliases are stored as executable files in the magic-alias directory.`,
 
 			err := form.Run()
 			if err != nil {
-				fmt.Println(ui.Error("Error: " + err.Error()))
+				ui.LogError("Error: %v", err)
 				os.Exit(1)
 			}
 		}
@@ -71,11 +71,11 @@ Aliases are stored as executable files in the magic-alias directory.`,
 		// Add the alias
 		err := shell.AddAlias(alias, command)
 		if err != nil {
-			fmt.Println(ui.Error("Error adding alias: " + err.Error()))
+			ui.LogError("Error adding alias: %v", err)
 			os.Exit(1)
 		}
 
-		fmt.Println(ui.Success("Successfully added alias: " + alias))
+		ui.LogSuccess("Successfully added alias: %s", alias)
 	},
 }
 

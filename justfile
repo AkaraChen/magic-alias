@@ -20,10 +20,6 @@ test:
     docker compose exec magic-alias go test ./...
     # docker run --rm -it -v "$PWD:/code" bats/bats:latest /code/test
 
-# Run the application
-run:
-    docker compose exec magic-alias go run main.go
-
 # View logs
 logs:
     docker compose logs -f
@@ -43,3 +39,7 @@ install:
 # Uninstall
 uninstall:
     rm -f $(go env GOPATH)/bin/ma
+
+# Run
+run *args:
+    go run ./cmd/ma {{args}}

@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/akarachen/magic-alias/pkg/shell"
@@ -27,16 +26,16 @@ Use this command to review and manage your existing aliases.`,
 
 		aliases, err := shell.ListAliases()
 		if err != nil {
-			fmt.Println(ui.Error("Error listing aliases: " + err.Error()))
+			ui.LogError("Error listing aliases: %v", err)
 			os.Exit(1)
 		}
 
 		if len(aliases) == 0 {
-			fmt.Println(ui.Empty("No aliases found. Use 'ma add' to create one."))
+			ui.LogEmpty("No aliases found. Use 'ma add' to create one.")
 			return
 		}
 
-		fmt.Println(ui.Title("Available Aliases"))
+		ui.LogTitle("Available Aliases")
 
 		// Create a list of aliases with selection capability
 		var selectedAlias string
@@ -55,16 +54,16 @@ Use this command to review and manage your existing aliases.`,
 		// Run the form
 		err = form.Run()
 		if err != nil {
-			fmt.Println(ui.Error("Error: " + err.Error()))
+			ui.LogError("Error: %v", err)
 			return
 		}
 
 		// If an alias was selected, show details
 		if selectedAlias != "" {
 			aliasPath := shell.GetAliasPath(selectedAlias)
-			fmt.Println(ui.Title("Alias Details"))
-			fmt.Println(ui.Info("Name: " + selectedAlias))
-			fmt.Println(ui.Info("Path: " + aliasPath))
+			ui.LogTitle("Alias Details")
+			ui.LogInfo("Name: %s", selectedAlias)
+			ui.LogInfo("Path: %s", aliasPath)
 		}
 	},
 }

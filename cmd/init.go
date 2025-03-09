@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/akarachen/magic-alias/pkg/shell"
@@ -27,7 +26,7 @@ to apply the changes immediately.`,
 		// Using UI package for styles
 
 		// Show initialization message
-		fmt.Println(ui.Title("Initializing Magic Alias"))
+		ui.LogTitle("Initializing Magic Alias")
 
 		// Create a loading indicator
 		var complete bool
@@ -49,14 +48,14 @@ to apply the changes immediately.`,
 
 			// Create the magic-alias folder if it doesn't exist
 			if err := os.MkdirAll(shell.MagicAliasPath, os.ModePerm); err != nil {
-				fmt.Println(ui.Error("Error creating magic-alias folder: " + err.Error()))
+				ui.LogError("Error creating magic-alias folder: %v", err)
 				os.Exit(1)
 			}
 
 			// Write the magic alias line to the rc file
 			err = shell.WriteMagicAliasToRc(shellName)
 			if err != nil {
-				fmt.Println(ui.Error("Error writing to rc file: " + err.Error()))
+				ui.LogError("Error writing to rc file: %v", err)
 				os.Exit(1)
 			}
 
@@ -64,9 +63,9 @@ to apply the changes immediately.`,
 			complete = true
 
 			// Show success message
-			fmt.Println(ui.Success("Magic Alias successfully initialized!"))
-			fmt.Println(ui.Info("Added to " + rcPath))
-			fmt.Println(ui.Warning("Please restart your shell or run 'source " + rcPath + "' to apply changes."))
+			ui.LogSuccess("Magic Alias successfully initialized!")
+			ui.LogInfo("Added to %s", rcPath)
+			ui.LogWarning("Please restart your shell or run 'source %s' to apply changes.", rcPath)
 		}()
 
 		// Run the form
@@ -75,7 +74,6 @@ to apply the changes immediately.`,
 		// Wait for the goroutine to complete if it hasn't already
 		for !complete {
 			// Small pause to avoid CPU spinning
-			fmt.Print("")
 		}
 	},
 }

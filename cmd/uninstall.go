@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/akarachen/magic-alias/pkg/shell"
@@ -30,7 +29,7 @@ Note: This will not remove the Magic Alias binary. To completely remove Magic Al
 you'll need to uninstall it using your package manager after running this command.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Using UI package for styles
-		fmt.Println(ui.Title("Uninstalling Magic Alias"))
+		ui.LogTitle("Uninstalling Magic Alias")
 
 		var confirmed bool = skipConfirm          // If skipConfirm is true, we don't need to ask
 		var removeAliases bool = removeAllAliases // Use flag value if provided
@@ -47,12 +46,12 @@ you'll need to uninstall it using your package manager after running this comman
 
 			err := confirmForm.Run()
 			if err != nil {
-				fmt.Println(ui.Error("Error: " + err.Error()))
+				ui.LogError("Error: %v", err)
 				os.Exit(1)
 			}
 
 			if !confirmed {
-				fmt.Println(ui.Info("Uninstall cancelled."))
+				ui.LogInfo("Uninstall cancelled.")
 				return
 			}
 
@@ -68,7 +67,7 @@ you'll need to uninstall it using your package manager after running this comman
 
 				err = removeAliasesForm.Run()
 				if err != nil {
-					fmt.Println(ui.Error("Error: " + err.Error()))
+					ui.LogError("Error: %v", err)
 					os.Exit(1)
 				}
 			}
@@ -88,21 +87,21 @@ you'll need to uninstall it using your package manager after running this comman
 			// Get the shell rc path
 			rcPath, err := shell.GetShellRcPath()
 			if err != nil {
-				fmt.Println(ui.Error("Error getting shell rc path: " + err.Error()))
+				ui.LogError("Error getting shell rc path: %v", err)
 				os.Exit(1)
 			}
 
 			// Remove Magic Alias from rc file
 			err = shell.RemoveMagicAliasFromRc(rcPath)
 			if err != nil {
-				fmt.Println(ui.Error("Error removing from rc file: " + err.Error()))
+				ui.LogError("Error removing from rc file: %v", err)
 				os.Exit(1)
 			}
 
 			// Remove aliases if requested
 			if removeAliases {
 				if err := os.RemoveAll(shell.MagicAliasPath); err != nil {
-					fmt.Println(ui.Error("Error removing aliases directory: " + err.Error()))
+					ui.LogError("Error removing aliases directory: %v", err)
 					os.Exit(1)
 				}
 			}
@@ -111,13 +110,13 @@ you'll need to uninstall it using your package manager after running this comman
 			complete = true
 
 			// Show success message
-			fmt.Println(ui.Success("Magic Alias successfully uninstalled!"))
-			fmt.Println(ui.Info("Removed from " + rcPath))
+			ui.LogSuccess("Magic Alias successfully uninstalled!")
+			ui.LogInfo("Removed from %s", rcPath)
 			if removeAliases {
-				fmt.Println(ui.Info("All aliases have been removed."))
+				ui.LogInfo("All aliases have been removed.")
 			}
-			fmt.Println(ui.Warning("Please restart your shell or run 'source " + rcPath + "' to apply changes."))
-			fmt.Println(ui.Info("To completely remove Magic Alias, uninstall it using your package manager."))
+			ui.LogWarning("Please restart your shell or run 'source %s' to apply changes.", rcPath)
+			ui.LogInfo("To completely remove Magic Alias, uninstall it using your package manager.")
 		}()
 
 		// Run the form
@@ -126,7 +125,7 @@ you'll need to uninstall it using your package manager after running this comman
 		// Wait for the goroutine to complete if it hasn't already
 		for !complete {
 			// Small pause to avoid CPU spinning
-			fmt.Print("")
+			// No need to print anything
 		}
 	},
 }

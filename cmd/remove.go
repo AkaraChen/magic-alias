@@ -39,16 +39,16 @@ Once removed, the alias will no longer be available in your shell.`,
 			// Otherwise, show an interactive selection of available aliases
 			aliases, err := shell.ListAliases()
 			if err != nil {
-				fmt.Println(ui.Error("Error listing aliases: " + err.Error()))
+				ui.LogError("Error listing aliases: %v", err)
 				os.Exit(1)
 			}
 
 			if len(aliases) == 0 {
-				fmt.Println(ui.Warning("No aliases found to remove."))
+				ui.LogWarning("No aliases found to remove.")
 				return
 			}
 
-			fmt.Println(ui.Title("Remove Alias"))
+			ui.LogTitle("Remove Alias")
 
 			// Create a form to select which alias to remove
 			form := huh.NewForm(
@@ -64,7 +64,7 @@ Once removed, the alias will no longer be available in your shell.`,
 
 			err = form.Run()
 			if err != nil {
-				fmt.Println(ui.Error("Error: " + err.Error()))
+				ui.LogError("Error: %v", err)
 				os.Exit(1)
 			}
 
@@ -84,12 +84,12 @@ Once removed, the alias will no longer be available in your shell.`,
 
 			err = confirmForm.Run()
 			if err != nil {
-				fmt.Println(ui.Error("Error: " + err.Error()))
+				ui.LogError("Error: %v", err)
 				os.Exit(1)
 			}
 
 			if !confirmed {
-				fmt.Println(ui.Warning("Removal cancelled."))
+				ui.LogWarning("Removal cancelled.")
 				return
 			}
 		}
@@ -97,11 +97,11 @@ Once removed, the alias will no longer be available in your shell.`,
 		// Remove the alias
 		err := shell.RemoveAlias(aliasName)
 		if err != nil {
-			fmt.Println(ui.Error("Error removing alias: " + err.Error()))
+			ui.LogError("Error removing alias: %v", err)
 			return
 		}
 
-		fmt.Println(ui.Success("Alias '" + aliasName + "' removed successfully"))
+		ui.LogSuccess("Alias '%s' removed successfully", aliasName)
 	},
 }
 
