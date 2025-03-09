@@ -26,6 +26,7 @@ The interactive mode includes:
 - Clear success/error feedback
 
 Once removed, the alias will no longer be available in your shell.`,
+	Args: cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		// Using UI package for styles
 

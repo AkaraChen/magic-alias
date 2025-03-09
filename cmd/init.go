@@ -21,6 +21,7 @@ This command will:
 
 After initialization, you'll need to restart your shell or source your rc file
 to apply the changes immediately.`,
+	Args: cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Using UI package for styles
 

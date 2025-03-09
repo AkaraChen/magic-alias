@@ -28,6 +28,7 @@ This command will:
 
 Note: This will not remove the Magic Alias binary. To completely remove Magic Alias,
 you'll need to uninstall it using your package manager after running this command.`,
+	Args: cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Using UI package for styles
 		ui.LogTitle("Uninstalling Magic Alias")

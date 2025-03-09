@@ -19,6 +19,7 @@ Features:
 - Empty state handling with helpful guidance when no aliases exist
 
 Use this command to review and manage your existing aliases.`,
+	Args: cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Using UI package for styles
 

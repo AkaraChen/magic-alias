@@ -20,7 +20,13 @@ You can provide the alias and command as arguments or use the interactive prompt
 
 The alias will be available in your shell immediately after creation.
 Aliases are stored as executable files in the magic-alias directory.`,
-	Args:    cobra.MinimumNArgs(0),
+	Args: func(cmd *cobra.Command, args []string) error {
+		// Allow 0, 2, or more arguments (0 for interactive mode, 2+ for direct mode)
+		if len(args) == 1 {
+			return fmt.Errorf("requires either no arguments or at least 2 arguments (alias and command)")
+		}
+		return nil
+	},
 	Example: "ma add m git",
 	Run: func(cmd *cobra.Command, args []string) {
 		var alias, command string
