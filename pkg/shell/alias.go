@@ -21,9 +21,9 @@ func AddAlias(alias string, command string) error {
 			return err
 		}
 	}
-	err := os.WriteFile(aliasPath, []byte(content), 0644)
+	err := os.WriteFile(aliasPath, []byte(content), 0755)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to write alias file: %w", err)
 	}
 	return nil
 }
