@@ -39,3 +39,7 @@ exec *args:
 # Install
 install:
     go install ./cmd/ma
+
+# Uninstall
+uninstall:
+    rm -f $(go env GOPATH)/bin/ma
