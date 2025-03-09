@@ -25,7 +25,7 @@ Get started with 'ma init' to set up the tool in your shell.`,
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
-		ui.LogErrorAndExit("Error: %v", "err", err)
+		ui.LogErrorAndExit("Execute command failed.", "err", err)
 	}
 }
 
