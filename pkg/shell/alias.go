@@ -47,8 +47,14 @@ func AddAlias(alias string, command string) error {
 
 func RemoveAlias(alias string) error {
 	aliasPath := filepath.Join(MagicAliasPath, alias)
+	if _, err := os.Stat(aliasPath); os.IsNotExist(err) {
+		return fmt.Errorf("alias '%s' not found - it may not have been added yet", alias)
+	}
 	err := os.Remove(aliasPath)
-	return err
+	if err != nil {
+		return fmt.Errorf("failed to remove alias: %w", err)
+	}
+	return nil
 }
 
 func ListAliases() ([]string, error) {
