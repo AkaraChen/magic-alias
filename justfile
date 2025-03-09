@@ -35,3 +35,7 @@ fmt:
 # Exec in container
 exec *args:
     docker compose exec magic-alias go run main.go {{args}}
+
+# Install
+install:
+    go install ./cmd/ma

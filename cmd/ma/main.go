@@ -1,4 +1,4 @@
-package ma
+package main
 
 import "github.com/akarachen/magic-alias/cmd"
 
