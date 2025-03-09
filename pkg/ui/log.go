@@ -15,12 +15,6 @@ var (
 	})
 )
 
-// Initialize sets up the logger with the appropriate configuration
-func Initialize() {
-	// Configure the logger with custom settings if needed
-	Logger.SetLevel(log.InfoLevel)
-}
-
 // Success logs a success message
 func LogSuccess(msg string, args ...interface{}) {
 	Logger.Info(IconSuccess+" "+msg, args...)
