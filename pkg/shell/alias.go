@@ -70,3 +70,8 @@ func ListAliases() ([]string, error) {
 	}
 	return aliasNames, nil
 }
+
+// GetAliasPath returns the full path to an alias file
+func GetAliasPath(alias string) string {
+	return filepath.Join(MagicAliasPath, alias)
+}
