@@ -37,6 +37,7 @@ to enable automatic loading of aliases.`,
 
 		fmt.Println("magic-alias successfully initialized!")
 		fmt.Printf("Added to %s\n", rcPath)
+		fmt.Println("\nPlease restart your shell or run 'source " + rcPath + "' to apply changes.")
 	},
 }
 
