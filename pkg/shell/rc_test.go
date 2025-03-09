@@ -6,6 +6,23 @@ import (
 	"testing"
 )
 
+var (
+	magicAliasLine string
+	shell          string
+)
+
+func init() {
+	var err error
+	shell, err = GetShellName()
+	if err != nil {
+		panic(err)
+	}
+	magicAliasLine, err = RenderScriptContent(shell)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func TestPathInPath(t *testing.T) {
 	tests := []struct {
 		name     string
@@ -73,7 +90,7 @@ func TestWriteMagicAliasToRc(t *testing.T) {
 		{
 			name:            "add to empty file",
 			initialContent:  "",
-			expectedContent: "\n" + magicAliasLine,
+			expectedContent: magicAliasLine,
 			expectError:     false,
 		},
 		{
@@ -86,7 +103,7 @@ func TestWriteMagicAliasToRc(t *testing.T) {
 			name:            "already exists",
 			initialContent:  magicAliasLine,
 			expectedContent: magicAliasLine,
-			expectError:     false,
+			expectError:     true,
 		},
 	}
 
@@ -99,7 +116,7 @@ func TestWriteMagicAliasToRc(t *testing.T) {
 			}
 
 			// Test the function with the temporary rc file path
-			err = WriteMagicAliasToRc(tmpRc)
+			err = WriteMagicAliasToRc(shell)
 			if (err != nil) != tt.expectError {
 				t.Errorf("expected error: %v, got: %v", tt.expectError, err)
 			}
@@ -137,26 +154,26 @@ func TestRemoveMagicAliasFromRc(t *testing.T) {
 		{
 			name:            "remove from file with magic alias and newline",
 			initialContent:  "existing content\n" + magicAliasLine,
-			expectedContent: "existing content",  // No trailing newline due to how RemoveMagicAliasFromRc works
+			expectedContent: "existing content", // No trailing newline due to how RemoveMagicAliasFromRc works
 			expectError:     false,
 		},
 		{
 			name:            "remove from file with magic alias at beginning",
 			initialContent:  magicAliasLine + "\nexisting content",
-			expectedContent: "\nexisting content",  // Keeps the newline after removing magicAliasLine
+			expectedContent: "existing content", // Keeps the newline after removing magicAliasLine
 			expectError:     false,
 		},
 		{
 			name:            "file without magic alias",
 			initialContent:  "existing content\n",
 			expectedContent: "existing content\n",
-			expectError:     false,
+			expectError:     true,
 		},
 		{
 			name:            "empty file",
 			initialContent:  "",
 			expectedContent: "",
-			expectError:     false,
+			expectError:     true,
 		},
 	}
 

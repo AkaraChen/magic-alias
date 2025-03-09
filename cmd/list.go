@@ -14,7 +14,7 @@ import (
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "Display all your configured aliases",
-	Long:  `Display an interactive list of all aliases created with Magic Alias.
+	Long: `Display an interactive list of all aliases created with Magic Alias.
 
 Features:
 - Shows all available aliases in an interactive selection menu

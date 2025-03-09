@@ -41,10 +41,10 @@ to apply the changes immediately.`,
 		// Process in a goroutine
 		go func() {
 			// Get the shell rc path
+			shellName, err := shell.GetShellName()
 			rcPath, err := shell.GetShellRcPath()
 			if err != nil {
-				fmt.Println(ui.Error("Error getting shell rc path: " + err.Error()))
-				os.Exit(1)
+				panic(err)
 			}
 
 			// Create the magic-alias folder if it doesn't exist
@@ -54,7 +54,7 @@ to apply the changes immediately.`,
 			}
 
 			// Write the magic alias line to the rc file
-			err = shell.WriteMagicAliasToRc(rcPath)
+			err = shell.WriteMagicAliasToRc(shellName)
 			if err != nil {
 				fmt.Println(ui.Error("Error writing to rc file: " + err.Error()))
 				os.Exit(1)

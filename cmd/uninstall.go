@@ -12,7 +12,7 @@ import (
 
 // Variables for command flags
 var (
-	skipConfirm bool
+	skipConfirm      bool
 	removeAllAliases bool
 )
 
@@ -32,7 +32,7 @@ you'll need to uninstall it using your package manager after running this comman
 		// Using UI package for styles
 		fmt.Println(ui.Title("Uninstalling Magic Alias"))
 
-		var confirmed bool = skipConfirm // If skipConfirm is true, we don't need to ask
+		var confirmed bool = skipConfirm          // If skipConfirm is true, we don't need to ask
 		var removeAliases bool = removeAllAliases // Use flag value if provided
 
 		// Ask for confirmation if not skipping

@@ -16,4 +16,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends debianutils
 # Copy the source code
 COPY . .
 
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
+
 ENV SHELL=/bin/bash

@@ -18,19 +18,16 @@ func init() {
 	MagicAliasPath = filepath.Join(homeDir, ".magic-alias")
 }
 
-const magicAliasLine = `# Magic Alias (ma)
-export PATH="$PATH:$HOME/.magic-alias"
-`
-
-func WriteMagicAliasToRc(rcPath string) error {
+func WriteMagicAliasToRc(shell string) error {
+	rcPath, err := GetShellRcPath()
 	// Check if the line already exists in the rc file
 	content, err := os.ReadFile(rcPath)
 	if err != nil {
 		return fmt.Errorf("failed to read rc file: %w", err)
 	}
 
-	if strings.Contains(string(content), magicAliasLine) {
-		return nil // Already exists, nothing to do
+	if RemoveScriptContent(string(content)) != string(content) {
+		return fmt.Errorf("magic alias line already exists in rc file")
 	}
 
 	// Append the line to the rc file
@@ -40,7 +37,11 @@ func WriteMagicAliasToRc(rcPath string) error {
 	}
 	defer f.Close()
 
-	if _, err := f.WriteString("\n" + magicAliasLine); err != nil {
+	scriptContent, err := RenderScriptContent(shell)
+	if err != nil {
+		return fmt.Errorf("failed to render script content: %w", err)
+	}
+	if _, err := f.WriteString("\n" + scriptContent); err != nil {
 		return fmt.Errorf("failed to write to rc file: %w", err)
 	}
 
@@ -71,17 +72,13 @@ func RemoveMagicAliasFromRc(rcPath string) error {
 		return fmt.Errorf("failed to read rc file: %w", err)
 	}
 
-	// Check if the magic alias line exists in the file
 	contentStr := string(content)
-	if !strings.Contains(contentStr, magicAliasLine) {
-		return nil // Nothing to remove
-	}
 
 	// Remove the magic alias line
-	newContent := strings.Replace(contentStr, "\n"+magicAliasLine, "", 1)
-	// If the replacement didn't work (possibly due to no newline), try without newline
+	newContent := RemoveScriptContent(contentStr)
+
 	if newContent == contentStr {
-		newContent = strings.Replace(contentStr, magicAliasLine, "", 1)
+		return fmt.Errorf("magic alias line not found in rc file")
 	}
 
 	// Write the updated content back to the file
