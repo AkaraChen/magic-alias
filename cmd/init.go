@@ -22,6 +22,12 @@ to enable automatic loading of aliases.`,
 			os.Exit(1)
 		}
 
+		// Create the magic-alias folder if it doesn't exist
+		if err := os.MkdirAll(shell.MagicAliasPath, os.ModePerm); err != nil {
+			fmt.Printf("Error creating magic-alias folder: %v\n", err)
+			os.Exit(1)
+		}
+
 		// Write the magic alias line to the rc file
 		err = shell.WriteMagicAliasToRc(rcPath)
 		if err != nil {
