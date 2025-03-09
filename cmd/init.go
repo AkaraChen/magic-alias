@@ -13,9 +13,16 @@ import (
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Initialize magic-alias in the shell",
-	Long: `Adds magic-alias to the shell rc file and PATH
-to enable automatic loading of aliases.`,
+	Short: "Initialize magic-alias in your shell environment",
+	Long: `Sets up magic-alias in your shell configuration file to enable automatic alias loading.
+
+This command will:
+- Create the necessary directory structure for storing aliases
+- Add the required configuration to your shell's rc file (bash, zsh, or fish)
+- Configure your PATH to include magic-alias commands
+
+After initialization, you'll need to restart your shell or source your rc file
+to apply the changes immediately.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Using UI package for styles
 

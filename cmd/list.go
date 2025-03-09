@@ -13,8 +13,15 @@ import (
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "List all aliases",
-	Long:  `Display a list of all aliases created with magic-alias.`,
+	Short: "Display all your configured aliases",
+	Long:  `Display an interactive list of all aliases created with magic-alias.
+
+Features:
+- Shows all available aliases in an interactive selection menu
+- Select an alias to view its details including the full path
+- Empty state handling with helpful guidance when no aliases exist
+
+Use this command to review and manage your existing aliases.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Using UI package for styles
 

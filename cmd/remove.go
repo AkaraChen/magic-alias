@@ -14,11 +14,19 @@ import (
 var removeCmd = &cobra.Command{
 	Use:     "remove <alias>",
 	Aliases: []string{"rm"},
-	Short:   "Remove an existing alias",
-	Long: `Remove an existing alias by deleting its corresponding file.
+	Short:   "Delete an existing alias from your configuration",
+	Long: `Remove an existing alias from your magic-alias configuration.
 
-Example:
-  magic-alias remove myalias`,
+This command offers two ways to remove an alias:
+1. Directly via command line: magic-alias remove myalias
+2. Interactively: Run without arguments to select from a list of existing aliases
+
+The interactive mode includes:
+- A selection menu of all available aliases
+- Confirmation prompt to prevent accidental deletion
+- Clear success/error feedback
+
+Once removed, the alias will no longer be available in your shell.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Using UI package for styles
 

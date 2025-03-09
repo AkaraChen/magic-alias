@@ -9,13 +9,18 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "magic-alias",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Short: "A simple and powerful shell alias manager",
+	Long: `Magic Alias is a modern, user-friendly tool for managing shell aliases.
+It allows you to create, list, and remove aliases with an interactive interface
+or command-line arguments.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Features:
+- Create aliases with a simple command
+- List all your aliases in an interactive menu
+- Remove aliases easily
+- Automatic shell integration
+
+Get started with 'magic-alias init' to set up the tool in your shell.`,
 }
 
 func Execute() {
