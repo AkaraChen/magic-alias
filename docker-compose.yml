@@ -1,0 +1,10 @@
+services:
+  magic-alias:
+    build: .
+    container_name: magic-alias
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - GO_ENV=development
+    command: ["sleep", "inf"]
