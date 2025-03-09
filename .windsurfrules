@@ -1,1 +1,2 @@
 1. Always use `just test` to run tests.
+2. Use cobra cli to add commands.
