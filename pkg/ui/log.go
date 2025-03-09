@@ -55,3 +55,9 @@ func LogEmpty(msg string, args ...interface{}) {
 func LogDebug(msg string, args ...interface{}) {
 	Logger.Debug(msg, args...)
 }
+
+// Show error log and exit
+func LogErrorAndExit(msg string, args ...interface{}) {
+	Logger.Error(msg, args...)
+	os.Exit(1)
+}

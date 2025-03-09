@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"os"
-
 	"github.com/akarachen/magic-alias/pkg/shell"
 	"github.com/akarachen/magic-alias/pkg/ui"
 	"github.com/charmbracelet/huh"
@@ -26,8 +24,7 @@ Use this command to review and manage your existing aliases.`,
 
 		aliases, err := shell.ListAliases()
 		if err != nil {
-			ui.LogError("Error listing aliases: %v", err)
-			os.Exit(1)
+			ui.LogErrorAndExit("Error listing aliases: %v", err)
 		}
 
 		if len(aliases) == 0 {

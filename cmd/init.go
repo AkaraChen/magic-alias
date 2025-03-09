@@ -32,21 +32,18 @@ to apply the changes immediately.`,
 		shellName, err := shell.GetShellName()
 		rcPath, err := shell.GetShellRcPath()
 		if err != nil {
-			ui.LogError("Error getting shell information: %v", err)
-			os.Exit(1)
+			ui.LogErrorAndExit("Error getting shell information: %v", err)
 		}
 
 		// Create the magic-alias folder if it doesn't exist
 		if err := os.MkdirAll(shell.MagicAliasPath, os.ModePerm); err != nil {
-			ui.LogError("Error creating magic-alias folder: %v", err)
-			os.Exit(1)
+			ui.LogErrorAndExit("Error creating magic-alias folder: %v", err)
 		}
 
 		// Write the magic alias line to the rc file
 		err = shell.WriteMagicAliasToRc(shellName)
 		if err != nil {
-			ui.LogError("Error writing to rc file: %v", err)
-			os.Exit(1)
+			ui.LogErrorAndExit("Error writing to rc file: %v", err)
 		}
 
 		// Show success message

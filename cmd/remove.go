@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/akarachen/magic-alias/pkg/shell"
 	"github.com/akarachen/magic-alias/pkg/ui"
@@ -39,8 +38,7 @@ Once removed, the alias will no longer be available in your shell.`,
 			// Otherwise, show an interactive selection of available aliases
 			aliases, err := shell.ListAliases()
 			if err != nil {
-				ui.LogError("Error listing aliases: %v", err)
-				os.Exit(1)
+				ui.LogErrorAndExit("Error listing aliases: %v", err)
 			}
 
 			if len(aliases) == 0 {
@@ -64,8 +62,7 @@ Once removed, the alias will no longer be available in your shell.`,
 
 			err = form.Run()
 			if err != nil {
-				ui.LogError("Error: %v", err)
-				os.Exit(1)
+				ui.LogErrorAndExit("Error: %v", err)
 			}
 
 			if aliasName == "" {
@@ -84,8 +81,7 @@ Once removed, the alias will no longer be available in your shell.`,
 
 			err = confirmForm.Run()
 			if err != nil {
-				ui.LogError("Error: %v", err)
-				os.Exit(1)
+				ui.LogErrorAndExit("Error: %v", err)
 			}
 
 			if !confirmed {

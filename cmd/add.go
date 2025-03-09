@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/akarachen/magic-alias/pkg/shell"
 	"github.com/akarachen/magic-alias/pkg/ui"
@@ -63,16 +62,14 @@ Aliases are stored as executable files in the magic-alias directory.`,
 
 			err := form.Run()
 			if err != nil {
-				ui.LogError("Error: %v", err)
-				os.Exit(1)
+				ui.LogErrorAndExit("Error: %v", err)
 			}
 		}
 
 		// Add the alias
 		err := shell.AddAlias(alias, command)
 		if err != nil {
-			ui.LogError("Error adding alias: %v", err)
-			os.Exit(1)
+			ui.LogErrorAndExit("Error adding alias: %v", err)
 		}
 
 		ui.LogSuccess("Successfully added alias: %s", alias)

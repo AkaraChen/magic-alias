@@ -47,8 +47,7 @@ you'll need to uninstall it using your package manager after running this comman
 
 			err := confirmForm.Run()
 			if err != nil {
-				ui.LogError("Error: %v", err)
-				os.Exit(1)
+				ui.LogErrorAndExit("Error: %v", err)
 			}
 
 			if !confirmed {
@@ -68,8 +67,7 @@ you'll need to uninstall it using your package manager after running this comman
 
 				err = removeAliasesForm.Run()
 				if err != nil {
-					ui.LogError("Error: %v", err)
-					os.Exit(1)
+					ui.LogErrorAndExit("Error: %v", err)
 				}
 			}
 		}
@@ -80,8 +78,7 @@ you'll need to uninstall it using your package manager after running this comman
 		// Get the shell rc path
 		rcPath, err := shell.GetShellRcPath()
 		if err != nil {
-			ui.LogError("Error getting shell rc path: %v", err)
-			os.Exit(1)
+			ui.LogErrorAndExit("Error getting shell rc path: %v", err)
 		}
 
 		// Create a backup of the rc file before modifying it with timestamp
@@ -89,28 +86,24 @@ you'll need to uninstall it using your package manager after running this comman
 		backupPath := rcPath + "." + timeStamp + ".bak"
 		rcContent, err := os.ReadFile(rcPath)
 		if err != nil {
-			ui.LogError("Error reading rc file: %v", err)
-			os.Exit(1)
+			ui.LogErrorAndExit("Error reading rc file: %v", err)
 		}
 
 		err = os.WriteFile(backupPath, rcContent, 0644)
 		if err != nil {
-			ui.LogError("Error creating backup file: %v", err)
-			os.Exit(1)
+			ui.LogErrorAndExit("Error creating backup file: %v", err)
 		}
 
 		// Remove Magic Alias from rc file
 		err = shell.RemoveMagicAliasFromRc(rcPath)
 		if err != nil {
-			ui.LogError("Error removing from rc file: %v", err)
-			os.Exit(1)
+			ui.LogErrorAndExit("Error removing from rc file: %v", err)
 		}
 
 		// Remove aliases if requested
 		if removeAliases {
 			if err := os.RemoveAll(shell.MagicAliasPath); err != nil {
-				ui.LogError("Error removing aliases directory: %v", err)
-				os.Exit(1)
+				ui.LogErrorAndExit("Error removing aliases directory: %v", err)
 			}
 		}
 

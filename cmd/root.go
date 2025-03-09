@@ -1,8 +1,7 @@
 package cmd
 
 import (
-	"os"
-
+	"github.com/akarachen/magic-alias/pkg/ui"
 	"github.com/spf13/cobra"
 )
 
@@ -26,7 +25,7 @@ Get started with 'ma init' to set up the tool in your shell.`,
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
-		os.Exit(1)
+		ui.LogErrorAndExit("Error: %v", err)
 	}
 }
 
