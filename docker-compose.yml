@@ -1,7 +1,20 @@
 services:
   magic-alias:
-    build: .
+    build: 
+      context: .
+      target: builder
     container_name: magic-alias
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - GO_ENV=development
+    command: ["sleep", "inf"]
+  test:
+    build:
+      context: .
+      target: test
+    container_name: magic-alias-test
     volumes:
       - .:/app
     working_dir: /app
