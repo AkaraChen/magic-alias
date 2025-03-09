@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var magicAliasPath string
+var MagicAliasPath string
 
 func init() {
 	homeDir, err := os.UserHomeDir()
@@ -15,7 +15,7 @@ func init() {
 		panic(err)
 	}
 
-	magicAliasPath = filepath.Join(homeDir, ".magic-alias")
+	MagicAliasPath = filepath.Join(homeDir, ".magic-alias")
 }
 
 const magicAliasLine = `# Magic Alias
@@ -60,5 +60,5 @@ func pathInPath(targetPath string) bool {
 }
 
 func IsMagicAliasInPath() (bool, error) {
-	return pathInPath(magicAliasPath), nil
+	return pathInPath(MagicAliasPath), nil
 }

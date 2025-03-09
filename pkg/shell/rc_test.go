@@ -40,7 +40,7 @@ func TestIsMagicAliasInPath(t *testing.T) {
 		pathEnv  string
 		expected bool
 	}{
-		{"in PATH", ":/bin:/usr/bin:" + magicAliasPath, true},
+		{"in PATH", ":/bin:/usr/bin:" + MagicAliasPath, true},
 		{"not in PATH", "/bin:/usr/bin", false},
 	}
 
