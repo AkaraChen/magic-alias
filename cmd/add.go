@@ -14,6 +14,7 @@ var addCmd = &cobra.Command{
 	Long: `Add a new alias that will execute the specified command.
 Example: magic-alias add m git`,
 	Args: cobra.ExactArgs(2),
+	Example: "magic-alias add m git",
 	Run: func(cmd *cobra.Command, args []string) {
 		alias := args[0]
 		command := args[1]
