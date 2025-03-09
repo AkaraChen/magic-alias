@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Alias - A Simple Shell Alias Manager</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #87cefa;
+            --background: #f8f9fa;
+            --text: #2d3436;
+            --code-bg: #2d3436;
+            --code-text: #dfe6e9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--background);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+        
+        p {
+            margin-bottom: 20px;
+        }
+        
+        blockquote {
+            border-left: 4px solid var(--secondary);
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            background-color: #eee;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        pre {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .feature-icon {
+            margin-right: 8px;
+        }
+        
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            color: #636e72;
+            font-size: 0.9rem;
+        }
+        
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(108, 178, 235, 0.15);
+            padding: 40px;
+            margin: 20px 0;
+            border-top: 5px solid var(--primary);
+        }
+
+        h3 {
+            color: #2980b9;
+            margin: 20px 0 10px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✨ Magic Alias ✨</h1>
+            <blockquote>
+                <p>🪄 A simple and powerful shell alias manager</p>
+            </blockquote>
+        </header>
+        
+        <main>
+            <section>
+                <h2>🌟 What is Magic Alias?</h2>
+                <p>Magic Alias (command: <code>ma</code>) is a friendly tool that helps you create and manage shell aliases. No more typing long commands over and over again!</p>
+            </section>
+            
+            <section>
+                <h2>🚀 Features</h2>
+                <ul>
+                    <li><span class="feature-icon">📝</span> <strong>Create aliases easily</strong>: Turn any long command into a short one</li>
+                    <li><span class="feature-icon">📋</span> <strong>List all your aliases</strong>: See all your shortcuts in one place</li>
+                    <li><span class="feature-icon">🗑️</span> <strong>Remove aliases</strong>: Delete shortcuts you don't need anymore</li>
+                    <li><span class="feature-icon">🖥️</span> <strong>Interactive UI</strong>: Nice menus make it easy to use</li>
+                    <li><span class="feature-icon">🔄</span> <strong>Works with your shell</strong>: Automatically sets up with your terminal</li>
+                </ul>
+            </section>
+            
+            <section>
+                <h2>📦 Installation</h2>
+                <pre><code># Install Magic Alias
+go install github.com/akarachen/magic-alias/cmd/ma@latest
+
+# Setup your shell automatically, with autocompletion included 🔋
+ma init</code></pre>
+            </section>
+            
+            <section>
+                <h2>🎮 How to Use</h2>
+                
+                <h3>Create a new alias</h3>
+                <pre><code># Create with arguments
+ma add g git
+
+# Or use interactive mode
+ma add</code></pre>
+                
+                <h3>List all your aliases</h3>
+                <pre><code>ma list</code></pre>
+                
+                <h3>Remove an alias</h3>
+                <pre><code># Remove with arguments
+ma remove g
+
+# Or use interactive mode
+ma rm</code></pre>
+                
+                <h3>Uninstall Magic Alias</h3>
+                <pre><code># Uninstall
+ma uninstall</code></pre>
+            </section>
+            
+            <section>
+                <h2>🧰 Development</h2>
+                <p>This project uses:</p>
+                <ul>
+                    <li><a href="https://github.com/spf13/cobra" target="_blank">Cobra</a> for CLI commands</li>
+                    <li><a href="https://github.com/charmbracelet/huh" target="_blank">Charm</a> for interactive UI</li>
+                    <li><a href="https://github.com/casey/just" target="_blank">Just</a> for development tasks</li>
+                </ul>
+                
+                <p>To run tests:</p>
+                <pre><code>just test</code></pre>
+            </section>
+            
+            <section>
+                <h2>📄 License</h2>
+                <p>See <a href="LICENSE">LICENSE</a> for details.</p>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Magic Alias - Made with ❤️ for command line enthusiasts</p>
+        </footer>
+    </div>
+</body>
+</html>
