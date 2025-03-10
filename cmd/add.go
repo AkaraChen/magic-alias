@@ -10,8 +10,9 @@ import (
 )
 
 var addCmd = &cobra.Command{
-	Use:   "add <alias> <command>",
-	Short: "Create a new shell alias for any command",
+	Use:     "add <alias> <command>",
+	Aliases: []string{"a"},
+	Short:   "Create a new shell alias for any command",
 	Long: `Create a new shell alias that will execute the specified command when invoked.
 
 You can provide the alias and command as arguments or use the interactive prompt:

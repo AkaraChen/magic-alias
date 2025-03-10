@@ -13,8 +13,9 @@ import (
 
 // listCmd represents the list command
 var listCmd = &cobra.Command{
-	Use:   "list",
-	Short: "Display all your configured aliases",
+	Use:     "list",
+	Aliases: []string{"ls"},
+	Short:   "Display all your configured aliases",
 	Long: `Display a table of all aliases created with Magic Alias.
 
 Features:
@@ -42,39 +43,39 @@ Use this command to review your existing aliases.`,
 		// Create a new table
 		t := table.NewWriter()
 		t.SetOutputMirror(os.Stdout)
-		
+
 		// Configure table style
 		t.SetStyle(table.StyleRounded)
-		
+
 		// Set table headers
 		t.AppendHeader(table.Row{"ALIAS", "COMMAND", "PATH"})
-		
+
 		// Configure header colors and style
 		t.Style().Format.Header = text.FormatDefault
-		
+
 		// Set column configurations
 		t.SetColumnConfigs([]table.ColumnConfig{
 			{Number: 1, WidthMax: 20},
 			{Number: 2, WidthMax: 40},
 			{Number: 3, WidthMax: 60},
 		})
-		
+
 		// Add rows to the table
 		for _, alias := range aliases {
 			aliasPath := shell.GetAliasPath(alias)
-			
+
 			// Get the command from the alias file
 			cmd, err := shell.GetAliasCommand(alias)
 			if err != nil {
 				cmd = "<error reading command>"
 			}
-			
+
 			// Clean up the command for display
 			cmd = strings.TrimSpace(cmd)
-			
+
 			t.AppendRow(table.Row{alias, cmd, aliasPath})
 		}
-		
+
 		// Render the table
 		t.Render()
 	},
