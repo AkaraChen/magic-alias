@@ -75,3 +75,21 @@ func ListAliases() ([]string, error) {
 func GetAliasPath(alias string) string {
 	return filepath.Join(MagicAliasPath, alias)
 }
+
+// GetAliasCommand reads the alias file and extracts the command
+func GetAliasCommand(alias string) (string, error) {
+	aliasPath := GetAliasPath(alias)
+	content, err := os.ReadFile(aliasPath)
+	if err != nil {
+		return "", fmt.Errorf("failed to read alias file: %w", err)
+	}
+	
+	// Extract the command using regex
+	cmdRegex := regexp.MustCompile(`exec\s+(.+?)\s+"\$@"`)
+	matches := cmdRegex.FindSubmatch(content)
+	if len(matches) < 2 {
+		return string(content), nil // Return full content if pattern not found
+	}
+	
+	return string(matches[1]), nil
+}

@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"os"
+	"strings"
 
 	"github.com/akarachen/magic-alias/pkg/shell"
 	"github.com/akarachen/magic-alias/pkg/ui"
@@ -18,7 +19,7 @@ var listCmd = &cobra.Command{
 
 Features:
 - Shows all available aliases in a table format
-- Displays alias names and their corresponding paths
+- Displays alias names, their commands, and corresponding paths
 - Empty state handling with helpful guidance when no aliases exist
 
 Use this command to review your existing aliases.`,
@@ -46,15 +47,32 @@ Use this command to review your existing aliases.`,
 		t.SetStyle(table.StyleRounded)
 		
 		// Set table headers
-		t.AppendHeader(table.Row{"ALIAS", "PATH"})
+		t.AppendHeader(table.Row{"ALIAS", "COMMAND", "PATH"})
 		
 		// Configure header colors and style
 		t.Style().Format.Header = text.FormatDefault
 		
+		// Set column configurations
+		t.SetColumnConfigs([]table.ColumnConfig{
+			{Number: 1, WidthMax: 20},
+			{Number: 2, WidthMax: 40},
+			{Number: 3, WidthMax: 60},
+		})
+		
 		// Add rows to the table
 		for _, alias := range aliases {
 			aliasPath := shell.GetAliasPath(alias)
-			t.AppendRow(table.Row{alias, aliasPath})
+			
+			// Get the command from the alias file
+			cmd, err := shell.GetAliasCommand(alias)
+			if err != nil {
+				cmd = "<error reading command>"
+			}
+			
+			// Clean up the command for display
+			cmd = strings.TrimSpace(cmd)
+			
+			t.AppendRow(table.Row{alias, cmd, aliasPath})
 		}
 		
 		// Render the table
