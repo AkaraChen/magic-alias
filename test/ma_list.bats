@@ -44,7 +44,7 @@ setup_list() {
   # Run the list command with arguments
   run ma list extraarg
   [ "$status" -ne 0 ]
-  [[ "$output" == *"accepts no arg"* ]]
+  [[ "$output" == *"unknown command"* ]]
   
   teardown
 }

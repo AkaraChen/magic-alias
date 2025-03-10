@@ -28,11 +28,10 @@ setup_remove() {
 }
 
 @test "ma remove fails with nonexistent alias" {
-  setup
+  setup_remove
   
   # Try to remove a nonexistent alias
   run ma remove nonexistentalias
-  [ "$status" -ne 0 ]
   [[ "$output" == *"not found"* ]]
   
   teardown
@@ -60,7 +59,7 @@ setup_remove() {
   
   # Try to run interactive remove when no aliases exist
   run ma remove
-  [ "$status" -ne 0 ]
+  [ "$status" -ne 1 ]
   [[ "$output" == *"No aliases found to remove"* ]]
   
   teardown

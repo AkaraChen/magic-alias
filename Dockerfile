@@ -22,14 +22,12 @@ ENV SHELL=/bin/bash
 
 RUN go build -o /app/ma ./cmd/ma
 
-FROM alpine:3.21.3 AS test
+FROM ubuntu:24.04 AS test
 
-RUN apk add --no-cache bats
+RUN apt-get update && apt-get install -y bats
 
 COPY --from=builder /app /app
 
-ENV PATH="/usr/local/bin:${PATH}"
-
-RUN mv /app/ma /usr/local/bin/ma && \
-    chmod +x /usr/local/bin/ma && \
-    ma version
+RUN mv /app/ma /bin/ma && \
+    chmod +x /bin/ma && \
+    ma -h

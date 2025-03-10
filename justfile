@@ -20,6 +20,10 @@ test:
     docker compose exec magic-alias go test ./...
     # docker run --rm -it -v "$PWD:/code" bats/bats:latest /code/test
 
+# Run tests using bats
+bats:
+    docker compose exec test bats /app/test
+
 # View logs
 logs:
     docker compose logs -f

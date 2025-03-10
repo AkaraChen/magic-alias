@@ -12,26 +12,6 @@ setup() {
   mkdir -p "$MAGIC_ALIAS_DIR"
   touch "$TEST_RC_FILE"
   
-  # Debug: Print current PATH and check for ma binary
-  echo "Current PATH: $PATH"
-  echo "Checking for ma binary in /usr/local/bin: $(ls -la /usr/local/bin/ma 2>/dev/null || echo 'Not found')"
-  echo "Checking for ma binary in current directory: $(ls -la ./ma 2>/dev/null || echo 'Not found')"
-  echo "Checking for ma binary in parent directory: $(ls -la ../ma 2>/dev/null || echo 'Not found')"
-  
-  # Copy ma binary to a location in PATH if it exists in /usr/local/bin
-  if [ -x "/usr/local/bin/ma" ]; then
-    # Make sure ma is in the PATH and executable
-    cp /usr/local/bin/ma "$TEMP_DIR/ma"
-    chmod +x "$TEMP_DIR/ma"
-    export PATH="$TEMP_DIR:$PATH"
-    echo "Copied ma to $TEMP_DIR/ma"
-    echo "New PATH: $PATH"
-    echo "Verifying ma is in PATH: $(which ma 2>/dev/null || echo 'Not found')"
-  else
-    # Fallback to project root (local development)
-    export PATH="$BATS_TEST_DIRNAME/..:$PATH"
-  fi
-  
   # Mock SHELL environment variable to use bash
   export SHELL="/bin/bash"
 }

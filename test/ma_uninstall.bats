@@ -56,7 +56,7 @@ load test_helper
   [[ "$output" == *"Backup created"* ]]
   
   # Extract the backup file path from the output
-  backup_file=$(echo "$output" | grep "Backup created" | sed -E 's/.*Backup created.*backup: ([^ ]+).*/\1/')
+  backup_file=$(echo "$output" | grep "Backup created" | sed -E 's/.*Backup created.*backup=([^ ]+).*/\1/')
   
   # Verify the backup file exists
   [ -f "$backup_file" ]

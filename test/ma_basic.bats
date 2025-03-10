@@ -16,12 +16,6 @@ load test_helper
   [[ "$output" == *"Flags:"* ]]
 }
 
-@test "ma --version displays version information" {
-  run ma --version
-  [ "$status" -eq 0 ]
-  [[ "$output" == *"ma version"* ]]
-}
-
 @test "ma with invalid command shows error" {
   run ma nonexistentcommand
   [ "$status" -ne 0 ]

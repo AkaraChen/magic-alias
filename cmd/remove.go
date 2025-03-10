@@ -43,7 +43,7 @@ Once removed, the alias will no longer be available in your shell.`,
 			}
 
 			if len(aliases) == 0 {
-				ui.LogWarning("No aliases found to remove.")
+				ui.LogErrorAndExit("No aliases found to remove.")
 				return
 			}
 
