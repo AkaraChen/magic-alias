@@ -1,12 +1,12 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
-	"text/tabwriter"
 
 	"github.com/akarachen/magic-alias/pkg/shell"
 	"github.com/akarachen/magic-alias/pkg/ui"
+	"github.com/jedib0t/go-pretty/v6/table"
+	"github.com/jedib0t/go-pretty/v6/text"
 	"github.com/spf13/cobra"
 )
 
@@ -38,21 +38,27 @@ Use this command to review your existing aliases.`,
 
 		ui.LogTitle("Available Aliases")
 
-		// Create a tabwriter for aligned output
-		w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
+		// Create a new table
+		t := table.NewWriter()
+		t.SetOutputMirror(os.Stdout)
 		
-		// Print table header
-		fmt.Fprintln(w, "ALIAS	PATH	")
-		fmt.Fprintln(w, "-----	----	")
+		// Configure table style
+		t.SetStyle(table.StyleRounded)
 		
-		// Print each alias and its path
+		// Set table headers
+		t.AppendHeader(table.Row{"ALIAS", "PATH"})
+		
+		// Configure header colors and style
+		t.Style().Format.Header = text.FormatDefault
+		
+		// Add rows to the table
 		for _, alias := range aliases {
 			aliasPath := shell.GetAliasPath(alias)
-			fmt.Fprintf(w, "%s	%s	\n", alias, aliasPath)
+			t.AppendRow(table.Row{alias, aliasPath})
 		}
 		
-		// Flush the tabwriter buffer
-		w.Flush()
+		// Render the table
+		t.Render()
 	},
 }
 
